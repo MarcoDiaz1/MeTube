@@ -3,6 +3,9 @@ export interface Video {
   image: string
   duration: number
   url: string // keep if you want (page URL)
+  viewsCount: number
+  likesCount: number
+  dislikesCount: number
 
   user: {
     name: string

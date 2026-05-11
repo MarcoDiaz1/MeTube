@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+}
+
+model Video {
+  id          String   @id
+  title       String
+  description String?
+  url         String
+  viewsCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  likesCount    Int @default(0)
+  dislikesCount Int @default(0)
+
+  viewsLog  View[]
+  reactions Reaction[]
+}
+
+model User {
+  id        String   @id
+  username  String   @unique
+  email     String   @unique
+  avatarUrl String?
+  bio       String?
+  createdAt DateTime @default(now())
+
+  reactions Reaction[]
+  views     View[]
+}
+
+model Reaction {
+  id        String       @id @default(uuid())
+  userId    String
+  videoId   String
+  type      ReactionType
+  createdAt DateTime     @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+  @@index([videoId, type])
+}
+
+model View {
+  id        String   @id @default(uuid())
+  userId    String?
+  videoId   String
+  createdAt DateTime @default(now())
+
+  user  User? @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@index([videoId])
+}

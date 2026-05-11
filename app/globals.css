@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-lemon: var(--font-lemonmilk);
   --font-ruminate: var(--font-ruminate);
+  --font-comfortaa: var(--font-comfortaa);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +24,20 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-fadeOut {
+  animation: fadeOut 3s forwards;
 }

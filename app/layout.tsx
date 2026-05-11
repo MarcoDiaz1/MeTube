@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 
 import './globals.css'
 import HeaderComp from './components/layout/header'
+import { AuthProvider } from './context/AuthContext'
 
 export const lemonmilk = localFont({
   src: './resources/fonts/lemonmilk.woff2', // Path relative to this file
@@ -13,6 +14,12 @@ export const lemonmilk = localFont({
 export const ruminate = localFont({
   src: './resources/fonts/ruminate.woff2', // Path relative to this file
   variable: '--font-ruminate', // CSS variable name for Tailwind
+  display: 'swap', // Improves performance
+})
+
+export const comfortaa = localFont({
+  src: './resources/fonts/comfortaa.woff2', // Path relative to this file
+  variable: '--font-comfortaa', // CSS variable name for Tailwind
   display: 'swap', // Improves performance
 })
 
@@ -29,11 +36,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${lemonmilk.variable} ${ruminate.variable} h-full antialiased`}
+      className={`${lemonmilk.variable} ${ruminate.variable} ${comfortaa.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <HeaderComp />
-        {children}
+        <AuthProvider>
+          <HeaderComp />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
